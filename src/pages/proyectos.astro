@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+
+// ==========================================
+// LISTA DE PROYECTOS (AQUÍ EDITAS Y AGREGAS)
+// ==========================================
+const proyectos = [
+  {
+    titulo: "Proyecto Capstone - CowTracker",
+    tipo: "Proyecto de Titulación · Duoc UC",
+    descripcion: "Solución integral desarrollada como proyecto de Capstone en Duoc UC. Diseñada bajo una arquitectura por capas y APIs RESTful seguras, incorporando autenticación por tokens JWT, acceso a datos optimizado y despliegue contenerizado.",
+    // Si tienes una imagen, colócala en /public/images/proyectos/capstone.png y pon su ruta aquí:
+    // imagen: "/images/proyectos/capstone.png",
+    imagen: "", // Déjalo vacío si aún no tienes imagen para usar el visor técnico por defecto
+    destacado: true,
+    stack: [
+      { nombre: "Next.js", icono: "simple-icons:nextdotjs" },
+      { nombre: "React Native", icono: "simple-icons:react" },
+      { nombre: "TypeScript", icono: "simple-icons:typescript" },
+      { nombre: "Express.js", icono: "simple-icons:express" },
+      { nombre: "FastAPI", icono: "simple-icons:fastapi" },
+      { nombre: "Python", icono: "simple-icons:python" },
+      { nombre: "PostgreSQL", icono: "simple-icons:postgresql" },
+      { nombre: "Docker", icono: "simple-icons:docker" },
+      { nombre: "Git", icono: "simple-icons:git" },
+      { nombre: "GitHub", icono: "simple-icons:github" },
+    ],
+    enlaces: {
+      github: "https://github.com/lucassmelendez/cowtracker", // Reemplaza con el link directo a tu repositorio
+      demo: "",    // Opcional: link a demo web si existe
+      swagger: "", // Opcional: link a documentación Swagger o Postman
+    }
+  },
+
+  // -------------------------------------------------------------
+  // PLANTILLA EJEMPLO: Copia desde aquí para agregar otro proyecto
+  // -------------------------------------------------------------
+  {
+    titulo: "E-commerce Ferretería 'Ferremax'",
+    tipo: "Proyecto Académico · Integración de Plataformas",
+    descripcion: "Desarrollo de un e-commerce completo para una ferretería ficticia, integrando un frontend moderno con Vue.js y Nuxt.js, y un backend robusto con ASP.NET Core Web API y FastAPI. Implementación de autenticación, gestión de productos, carrito de compras y procesamiento de pagos con Mercado Pago.",
+    imagen: "", // Ruta a la imagen o vacío para plantilla
+    destacado: false,
+    stack: [
+      { nombre: "ASP.NET Core Web API", icono: "simple-icons:dotnet" },
+      { nombre: "C#", icono: "simple-icons:csharp" },
+      { nombre: "FastAPI", icono: "simple-icons:fastapi" },
+      { nombre: "Python", icono: "simple-icons:python" },
+      { nombre: "Nuxt.js", icono: "simple-icons:nuxt" },
+      { nombre: "Vue.js", icono: "simple-icons:vuedotjs" },
+      { nombre: "TypeScript", icono: "simple-icons:typescript" },
+      { nombre: "PostgreSQL", icono: "simple-icons:postgresql" },
+      { nombre: "Docker", icono: "simple-icons:docker" },
+      { nombre: "Git", icono: "simple-icons:git" },
+      { nombre: "GitHub", icono: "simple-icons:github" },
+    ],
+    enlaces: {
+      github: "https://github.com/AstrexionTech",
+      demo: "",
+      swagger: "",
+    }
+  },
+];
+---
+
+<Layout title="Proyectos | Camilo Le Fort">
+  <div class="py-12 md:py-16">
+    
+    <!-- Botón Volver y Encabezado -->
+    <div class="mb-12">
+      <a 
+        href="/" 
+        class="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors duration-200 mb-6 group no-underline"
+      >
+        <Icon name="tabler:arrow-left" class="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
+        Volver al Inicio
+      </a>
+
+      <div class="flex items-center gap-3 mb-3">
+        <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          <Icon name="tabler:folders" class="w-6 h-6" />
+        </span>
+        <span class="text-indigo-400 text-sm font-bold uppercase tracking-wider">Portafolio Técnico</span>
+      </div>
+
+      <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
+        Mis Proyectos
+      </h1>
+      <p class="text-slate-400 text-base md:text-lg max-w-200 leading-relaxed m-0">
+        Una selección de soluciones de software, proyectos académicos de titulación y desarrollos backend donde aplico buenas prácticas de arquitectura, lógica de datos y escalabilidad.
+      </p>
+    </div>
+
+    <!-- LISTADO DE TARJETAS DE PROYECTOS -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {proyectos.map((proyecto) => (
+        <article class="flex flex-col bg-[#0a0a0c]/90 border border-white/10 hover:border-indigo-500/40 rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[0_10px_30px_rgba(99,102,241,0.15)] transition-all duration-300 group">
+          
+          <!-- ZONA DE IMAGEN O FALLBACK TÉCNICO -->
+          <div class="w-full h-56 md:h-64 bg-[#141418] relative overflow-hidden border-b border-white/10 flex items-center justify-center">
+            {proyecto.imagen ? (
+              <img 
+                src={proyecto.imagen} 
+                alt={`Captura de ${proyecto.titulo}`} 
+                class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
+              />
+            ) : (
+              // Visor abstracto/backend cuando no hay imagen
+              <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-radial from-indigo-950/30 via-[#0e0e12] to-[#0a0a0c]">
+                <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-3 group-hover:border-indigo-500/50 group-hover:scale-110 transition-all duration-300">
+                  <Icon name="tabler:server-2" class="text-3xl text-indigo-400" />
+                </div>
+                <span class="text-xs uppercase tracking-widest text-slate-500 font-mono">Backend Architecture & API</span>
+              </div>
+            )}
+
+            <!-- Badge flotante de Categoría -->
+            <span class="absolute top-4 left-4 text-xs font-semibold px-3 py-1 rounded-full bg-[#111116]/80 backdrop-blur-md border border-white/15 text-indigo-300">
+              {proyecto.tipo}
+            </span>
+          </div>
+
+          <!-- CONTENIDO DEL PROYECTO -->
+          <div class="p-6 md:p-8 flex-1 flex flex-col justify-between">
+            <div>
+              <h2 class="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">
+                {proyecto.titulo}
+              </h2>
+
+              <p class="text-slate-300 text-sm md:text-[0.95rem] leading-relaxed mb-6 text-justify">
+                {proyecto.descripcion}
+              </p>
+
+              <!-- Tech Stack Tags -->
+              <div class="mb-6">
+                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-2.5">
+                  Stack Tecnológico
+                </span>
+                <div class="flex flex-wrap gap-2">
+                  {proyecto.stack.map((tech) => (
+                    <span class="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-200 font-medium">
+                      {tech.icono && <Icon name={tech.icono} class="w-3.5 h-3.5 text-indigo-400" />}
+                      {tech.nombre}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <!-- ENLACES Y ACCIONES -->
+            <div class="pt-5 border-t border-white/10 flex flex-wrap gap-3 items-center">
+              {proyecto.enlaces.github && (
+                <a 
+                  href={proyecto.enlaces.github} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/25 transition-all no-underline"
+                >
+                  <Icon name="tabler:brand-github" class="text-base" />
+                  <span>Código en GitHub</span>
+                </a>
+              )}
+
+              {proyecto.enlaces.swagger && (
+                <a 
+                  href={proyecto.enlaces.swagger} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition-all no-underline"
+                >
+                  <Icon name="tabler:api" class="text-base" />
+                  <span>Swagger Docs</span>
+                </a>
+              )}
+
+              {proyecto.enlaces.demo && (
+                <a 
+                  href={proyecto.enlaces.demo} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 transition-all no-underline"
+                >
+                  <Icon name="tabler:external-link" class="text-base" />
+                  <span>Demo en vivo</span>
+                </a>
+              )}
+            </div>
+
+          </div>
+
+        </article>
+      ))}
+    </div>
+
+  </div>
+</Layout>

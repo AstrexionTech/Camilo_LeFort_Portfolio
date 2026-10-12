@@ -1,0 +1,85 @@
+---
+import '../styles/global.css';
+
+const phrases = [
+  "Desarrollador Backend",
+  "Estudiante de Ingeniería",
+  "Fanático de PC Gaming", 
+];
+---
+
+<section class="flex justify-center items-center min-h-[30vh] md:min-h-[40vh] w-full relative z-1">
+  <div class="text-center">
+    <h2 class="text-[clamp(1.5rem,5vw,2.5rem)] text-slate-300 mb-2 font-normal">Hola, soy Camilo</h2>
+    
+    <div class="text-[clamp(2rem,8vw,4.5rem)] font-extrabold leading-[1.2] text-white font-sans">
+      <span class="text-white">y soy </span>
+      <span id="typewriter-text" class="text-indigo-500 relative"></span><span class="cursor inline-block w-0.75 bg-indigo-500 ml-1.25 animate-[blink_1s_infinite]">&nbsp;</span>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ phrases }}>
+  // Variable para guardar el temporizador y poder limpiarlo si cambias de página rápido
+  let typingTimer;
+
+  function startTypewriter() {
+    const textElement = document.getElementById('typewriter-text');
+    const cursorElement = document.querySelector('.cursor');
+    
+    // Si no encuentra el elemento (ej. estamos en otra página), no hace nada
+    if (!textElement) return;
+
+    let currentPhraseIndex = 0;
+    let currentCharIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function type() {
+      // Verificación de seguridad: si el elemento ya no existe (porque cambiaste de página), parar
+      if (!document.getElementById('typewriter-text')) return;
+
+      const currentPhrase = phrases[currentPhraseIndex];
+      
+      if (isDeleting) {
+        textElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
+        currentCharIndex--;
+        typeSpeed = 50;
+      } else {
+        textElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
+        currentCharIndex++;
+        typeSpeed = 100;
+      }
+
+      if (!isDeleting && currentCharIndex === currentPhrase.length) {
+        isDeleting = true;
+        typeSpeed = 2000; 
+      } else if (isDeleting && currentCharIndex === 0) {
+        isDeleting = false;
+        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+        typeSpeed = 500;
+      }
+
+      typingTimer = setTimeout(type, typeSpeed);
+    }
+
+    // Iniciamos el bucle
+    type();
+  }
+
+  // --- EL CAMBIO MÁGICO ---
+  // En vez de 'DOMContentLoaded', usamos 'astro:page-load'
+  // Esto asegura que corra CADA VEZ que navegas a la página
+  document.addEventListener('astro:page-load', () => {
+    // Limpiamos cualquier temporizador viejo por seguridad
+    clearTimeout(typingTimer);
+    startTypewriter();
+  });
+</script>
+
+<style>
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>

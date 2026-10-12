@@ -1,0 +1,137 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const stats = [
+  {
+    target: 2,
+    prefix: '+',
+    suffix: '',
+    textoFijo: null,
+    valorFallback: '+2',
+    label: 'Años Programando',
+    descripcion: 'Enfocado en lógica backend y buenas prácticas',
+    icon: 'tabler:code',
+    color: 'text-indigo-400',
+  },
+  {
+    target: null,
+    prefix: '',
+    suffix: '',
+    textoFijo: 'Backend',
+    valorFallback: 'Backend',
+    label: 'Especialidad Principal',
+    descripcion: '.NET Core, C#, SQL y Arquitecturas REST',
+    icon: 'tabler:server',
+    color: 'text-emerald-400',
+  },
+  {
+    target: 4,
+    prefix: '',
+    suffix: '',
+    textoFijo: null,
+    valorFallback: '4',
+    label: 'Certificaciones',
+    descripcion: 'Microsoft Azure, Scrum y C#',
+    icon: 'tabler:certificate',
+    color: 'text-amber-400',
+  },
+  {
+    target: 100,
+    prefix: '',
+    suffix: '%',
+    textoFijo: null,
+    valorFallback: '100%',
+    label: 'Disponibilidad',
+    descripcion: 'Para Práctica Profesional / Inmediata',
+    icon: 'tabler:briefcase',
+    color: 'text-cyan-400',
+  },
+];
+---
+
+<section id="stats-section" class="w-full mt-4 md:mt-6 mb-12 md:mb-16">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 bg-[#0c0c0e]/80 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+    {stats.map((item) => (
+      <div class="flex flex-col items-center text-center p-4 rounded-xl transition-all duration-300 hover:bg-white/5 group">
+        
+        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:border-white/20 transition-all duration-300">
+          <Icon name={item.icon} class={`text-2xl ${item.color}`} />
+        </div>
+        
+        <!-- Valor animado o estático -->
+        <span 
+          class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-1"
+          data-counter={item.target !== null ? "true" : undefined}
+          data-target={item.target !== null ? item.target : undefined}
+          data-prefix={item.prefix}
+          data-suffix={item.suffix}
+        >
+          {item.valorFallback}
+        </span>
+        
+        <span class="text-sm font-semibold text-slate-200 mb-1">
+          {item.label}
+        </span>
+        
+        <p class="text-xs text-slate-400 leading-relaxed m-0">
+          {item.descripcion}
+        </p>
+
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  function initCounters() {
+    const section = document.getElementById('stats-section');
+    if (!section) return;
+
+    const counters = section.querySelectorAll<HTMLElement>('[data-counter="true"]');
+    if (counters.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            counters.forEach((counter) => {
+              const target = parseInt(counter.dataset.target || '0', 10);
+              const prefix = counter.dataset.prefix || '';
+              const suffix = counter.dataset.suffix || '';
+              const duration = 1200; // 1.2 segundos
+              const startTime = performance.now();
+
+              function animate(currentTime: number) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Función de aceleración suave (easeOutExpo)
+                const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                const currentNumber = Math.floor(easeOut * target);
+
+                counter.textContent = `${prefix}${currentNumber}${suffix}`;
+
+                if (progress < 1) {
+                  requestAnimationFrame(animate);
+                } else {
+                  counter.textContent = `${prefix}${target}${suffix}`;
+                }
+              }
+
+              requestAnimationFrame(animate);
+            });
+
+            // Desconectar tras ejecutarse para que anime solo una vez al entrar
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(section);
+  }
+
+  // Se activa al cargar la página y tras cambios de ruta con Astro
+  document.addEventListener('astro:page-load', initCounters);
+</script>

@@ -1,0 +1,150 @@
+---
+import '../styles/global.css';
+import { Icon } from 'astro-icon/components';
+import profileImage from '../assets/images/profile.jpg';
+---
+
+<section class="flex flex-col-reverse min-[901px]:flex-row items-center justify-between text-center min-[901px]:text-left gap-8 min-[901px]:gap-16 min-h-auto min-[901px]:min-h-[65vh] pt-24 pb-6 min-[901px]:pt-28 min-[901px]:pb-8 overflow-hidden">
+  
+  <div class="flex-1 max-w-150 w-full px-4 min-[901px]:px-0 flex flex-col items-center min-[901px]:items-start">
+    
+    <!-- 1. Badge con entrada suave y punto titilante -->
+    <div class="animate-fade-in-up delay-100 mb-4">
+      <span class="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full text-[0.85rem] font-semibold">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        Disponible para realizar prácticas profesionales
+      </span>
+    </div>
+    
+    <!-- 2. Título principal -->
+    <h1 class="animate-fade-in-up delay-200 text-[2.5rem] min-[901px]:text-[3.5rem] font-bold leading-[1.1] text-white mb-2">
+      Hola, soy <span class="text-indigo-500">Camilo</span>
+    </h1>
+    
+    <!-- 3. Typewriter interactivo -->
+    <div class="animate-fade-in-up delay-300 text-[1.3rem] min-[381px]:text-[1.5rem] min-[901px]:text-[1.8rem] font-semibold text-slate-300 mb-6 flex items-center flex-wrap justify-center min-[901px]:justify-start gap-[0.3em] min-[901px]:gap-[0.4em] min-h-16 min-[901px]:min-h-14 leading-[1.2]">
+      <span>Soy</span>
+      <span id="typewriter-text" class="text-white wrap-break-word"></span>
+      <span class="inline-block -ml-0.5 text-indigo-500 h-[1em] align-middle animate-[blink_1s_infinite]">|</span>
+    </div>
+
+    <!-- 4. Párrafo descriptivo -->
+    <p class="animate-fade-in-up delay-400 text-[1.1rem] text-slate-400 leading-[1.6] mb-8 [&>strong]:text-slate-200">
+      Estudiante de Ingeniería en Informática y apasionado por el <strong class="text-slate-200 font-semibold">Backend</strong>. 
+      Transformo lógica compleja en código eficiente usando .NET y Docker. 
+    </p>
+
+    <!-- 5. Botones de acción -->
+    <div class="animate-fade-in-up delay-500 flex flex-wrap gap-4 justify-center min-[901px]:justify-start">
+      <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-[0.8rem] rounded-lg font-semibold text-white bg-indigo-500 hover:bg-indigo-600 hover:-translate-y-0.75 transition-all duration-200 no-underline shadow-lg shadow-indigo-500/20">
+        <Icon name="tabler:mail" /> Contáctame
+      </a>
+      <a href="https://github.com/AstrexionTech" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-[0.8rem] rounded-lg font-semibold text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:-translate-y-0.75 transition-all duration-200 no-underline">
+        <Icon name="tabler:brand-github" /> GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/camilo-lefort/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-[0.8rem] rounded-lg font-semibold text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:-translate-y-0.75 transition-all duration-200 no-underline">
+        <Icon name="tabler:brand-linkedin" /> LinkedIn
+      </a>
+    </div>
+  </div>
+
+  <!-- 6. Imagen con entrada de escala suave -->
+  <div class="animate-fade-in-scale delay-300 flex-1 flex justify-center relative max-w-112.5 w-full">
+    <div class="w-62.5 h-62.5 min-[901px]:w-87.5 min-[901px]:h-87.5 rounded-[30px] overflow-hidden border-2 border-white/10 relative z-2 rotate-0 min-[901px]:rotate-3 hover:rotate-0 hover:scale-[1.02] transition-transform duration-300 ease-out bg-[#1e1e1e]">
+      <img src={profileImage.src} alt="Foto de perfil de Camilo" class="w-full h-full object-cover" />
+    </div>
+    <div class="absolute w-full h-full bg-[radial-gradient(circle,rgba(99,102,241,0.4)_0%,transparent_70%)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1 blur-2xl pointer-events-none"></div>
+  </div>
+
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const textElement = document.getElementById('typewriter-text');
+    
+    if (!textElement) return;
+
+    const phrases = ["Desarrollador Backend", "Estudiante de Ingeniería", "Fanático de PC Gaming"];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    
+    function type() {
+      if (!textElement) return;
+
+      const currentPhrase = phrases[phraseIndex];
+      
+      if (isDeleting) {
+        textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let typeSpeed = isDeleting ? 50 : 100;
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        isDeleting = true;
+        typeSpeed = 2000; 
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typeSpeed = 500;
+      }
+
+      setTimeout(type, typeSpeed);
+    }
+
+    type();
+  });
+</script>
+
+<style>
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.93);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-scale {
+    animation: fadeInScale 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+</style>

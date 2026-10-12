@@ -1,0 +1,147 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const pilares = [
+  {
+    icon: 'tabler:server-cog',
+    titulo: 'Enfoque en Backend & Datos',
+    desc: 'Me apasiona diseñar APIs robustas, modelar bases de datos eficientes y transformar lógica compleja en código mantenible con .NET y SQL.',
+    color: 'text-indigo-400',
+    border: 'border-indigo-500/20',
+  },
+  {
+    icon: 'tabler:rocket',
+    titulo: 'Aprendizaje & Autonomía',
+    desc: 'Curiosidad técnica constante respaldada por certificaciones oficiales (Microsoft Azure, Scrum) y cursos prácticos de especialización.',
+    color: 'text-emerald-400',
+    border: 'border-emerald-500/20',
+  },
+  {
+    icon: 'tabler:users-group',
+    titulo: 'Trabajo en Equipo & Agilidad',
+    desc: 'Comunicación clara, empatía técnica y familiaridad con ceremonias ágiles (Scrum) y flujos colaborativos con Git.',
+    color: 'text-amber-400',
+    border: 'border-amber-500/20',
+  },
+  {
+    icon: 'tabler:map-pin',
+    titulo: 'Disponibilidad Inmediata',
+    desc: 'Radicado en Santiago de Chile, disponible para modalidad remota, híbrida o presencial para realizar mi práctica profesional.',
+    color: 'text-cyan-400',
+    border: 'border-cyan-500/20',
+  },
+];
+---
+
+<section id="sobre-mi" class="w-full py-16 md:py-24 border-t border-white/5 scroll-mt-20 overflow-hidden">
+  
+  <!-- Título de sección -->
+  <div class="reveal-header flex items-center gap-3 mb-10 pb-2 border-b-2 border-indigo-500/30 max-w-250 mx-auto">
+    <Icon name="tabler:user" class="text-3xl text-indigo-400" />
+    <h2 class="text-2xl md:text-3xl font-bold text-white m-0">Sobre mí</h2>
+  </div>
+
+  <div class="max-w-250 mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+    
+    <!-- Columna Izquierda: La Narrativa Personal (Desliza desde la izquierda) -->
+    <div class="reveal-left lg:col-span-7 space-y-5 text-slate-300 text-base md:text-[1.05rem] leading-relaxed text-justify">
+      <p>
+        ¡Hola de nuevo! Soy <strong class="text-white font-semibold">Camilo Le Fort</strong>, estudiante de último año de <span class="text-indigo-400 font-medium">Ingeniería en Informática en Duoc UC</span> y desarrollador enfocado en el ecosistema <strong class="text-white font-semibold">Backend</strong>.
+      </p>
+
+      <p>
+        Desde que escribí mis primeras líneas de código, me fascinó entender <em>qué ocurre detrás de la interfaz</em>: cómo viajan los datos de manera segura, cómo se estructuran las reglas de negocio y cómo optimizar consultas para que un sistema responda en milisegundos. Por eso he centrado mi formación en tecnologías como <strong class="text-slate-100">C# (.NET Core)</strong>, <strong class="text-slate-100">SQL Server</strong>, <strong class="text-slate-100">Docker</strong> y servicios en la nube con <strong class="text-slate-100">Azure</strong>.
+      </p>
+
+      <p>
+        Me caracterizo por ser una persona analítica, autodidacta y con un fuerte sentido del compromiso y la excelencia académica. Me gusta entender el <em>"por qué"</em> de las soluciones y aplicar buenas prácticas como <strong>Clean Code</strong> y arquitecturas modulares.
+      </p>
+
+      <p class="pt-2">
+        🎯 <strong class="text-white">Mi objetivo actual:</strong> Integrarme a un equipo de desarrollo donde pueda realizar mi <span class="text-emerald-400 font-semibold">práctica profesional</span>, aportar proactivamente en proyectos reales y continuar nutriéndome de la experiencia de ingenieros seniors.
+      </p>
+    </div>
+
+    <!-- Columna Derecha: Tarjetas de Pilares Clave (Deslizan desde la derecha en cascada) -->
+    <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+      {pilares.map((pilar, index) => (
+        <div 
+          class={`reveal-card bg-[#0a0a0c]/85 border ${pilar.border} rounded-xl p-4.5 transition-all duration-300 hover:bg-white/5 hover:translate-x-1.5`}
+          style={`transition-delay: ${index * 120}ms`}
+        >
+          <div class="flex items-center gap-3 mb-2">
+            <Icon name={pilar.icon} class={`text-2xl ${pilar.color} shrink-0`} />
+            <h3 class="text-sm font-bold text-white m-0">
+              {pilar.titulo}
+            </h3>
+          </div>
+          <p class="text-xs text-slate-400 leading-normal m-0 text-left">
+            {pilar.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+  function initAboutReveal() {
+    const section = document.getElementById('sobre-mi');
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            section.classList.add('is-visible');
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(section);
+  }
+
+  document.addEventListener('astro:page-load', initAboutReveal);
+</script>
+
+<style>
+  /* Estados iniciales (antes de que la sección sea visible) */
+  .reveal-header {
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-24px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-card {
+    opacity: 0;
+    transform: translateX(24px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Estados activados cuando entra al viewport */
+  :global(#sobre-mi.is-visible) .reveal-header {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  :global(#sobre-mi.is-visible) .reveal-left {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  :global(#sobre-mi.is-visible) .reveal-card {
+    opacity: 1;
+    transform: translateX(0);
+  }
+</style>

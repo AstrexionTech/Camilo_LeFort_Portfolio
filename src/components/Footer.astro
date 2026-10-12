@@ -1,0 +1,18 @@
+---
+import '../styles/global.css';
+
+const today = new Date();
+const year = today.getFullYear();
+---
+
+<footer class="bg-[#1a1a1a] text-[#f3f3f3] p-8 mt-auto">
+  <div class="flex flex-col items-center gap-4 text-center">
+    <p>&copy; {year} <strong class="text-white font-semibold">Camilo Le Fort</strong>. Todos los derechos reservados.</p>
+    
+    <div class="flex gap-6">
+      <a href="https://github.com/AstrexionTech" target="_blank" rel="noopener noreferrer" class="text-[#a3a3a3] no-underline transition-colors duration-300 hover:text-white hover:underline">GitHub</a>
+      <a href="https://www.linkedin.com/in/camilo-lefort/" target="_blank" rel="noopener noreferrer" class="text-[#a3a3a3] no-underline transition-colors duration-300 hover:text-white hover:underline">LinkedIn</a>
+      <a href="mailto:camilolefort.g2004@outlook.com" class="text-[#a3a3a3] no-underline transition-colors duration-300 hover:text-white hover:underline">Email</a>
+    </div>
+  </div>
+</footer>
